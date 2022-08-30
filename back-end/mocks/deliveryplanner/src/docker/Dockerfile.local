@@ -1,0 +1,10 @@
+FROM openjdk:17-bullseye
+
+COPY ./target/deliveryplanner-0.0.1-SNAPSHOT.jar ./deliveryplanner.jar
+
+COPY src/docker/start.sh start.sh
+RUN chmod +x start.sh
+
+# set the startup command to execute the jar
+ENTRYPOINT ["./start.sh"]
+

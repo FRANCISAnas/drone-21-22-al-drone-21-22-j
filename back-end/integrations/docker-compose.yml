@@ -1,0 +1,146 @@
+version: "3.5"
+
+services:
+  postgresqldb:
+    image: jolydronepostgresdb
+    container_name: teamj-jolydrone-postgresqldb
+    hostname: postgresqldb
+    restart: unless-stopped
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_PASSWORD=a_super_passwordw896
+      - POSTGRES_USER=yankee_esquina
+
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: jolydronerabbitmq
+    expose:
+      - "5672"
+
+  customercare:
+    image: teamj-jolydrone-customercare
+    container_name: customercarehost
+    depends_on:
+      - postgresqldb
+      - bank
+    expose:
+      - "8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydronecustomerdb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - PORT=8081
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - BANK_SERVER_URL=http://jolydronebankhost:5000
+      - FLIGHT_MONITOR_URL=http://flightmonitorhost:8083
+      - BANK_HOST=jolydronebankhost
+      - BANK_PORT=5000
+
+
+  deliveryplanner:
+    image: teamj-jolydrone-deliveryplanner
+    container_name: deliveryplannerhost
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydronedeliveryplannerdb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - CHARGING_STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8082
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - FLIGHT_MONITOR_URL=http://flightmonitorhost:8083
+
+  flightmonitor:
+    image: teamj-jolydrone-flightmonitor
+    container_name: flightmonitorhost
+    depends_on:
+      - postgresqldb
+      - bank
+    expose:
+      - "8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - CHARGING_STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8083
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+
+  stationmanager:
+    image: teamj-jolydrone-stationmanager
+    container_name: stationmanagerhost
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8084:8084"
+    expose:
+      - "8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydronestationmanagerdb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - PORT=8084
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+
+
+  bank:
+    image: teamj-jolydrone-bank
+    container_name: jolydronebankhost
+    environment:
+      - PORT=5000
+
+
+
+  drone:
+    image: teamj-jolydrone-drone
+    container_name: jolydroneone
+    environment:
+      - DRONE_NAME=jlyone
+      - UNLOADED_WEIGHT=25
+      - AUTONOMY_MAXIMUM=4000
+      - BATTERY_LEVEL_IN_PERCENT=100
+      - STATUS=AVAILABLE
+      - MAXIMUM_WEIGHING_CAPACITY=125
+      - RABBIT_HOST=jolydronerabbitmq
+    depends_on:
+      - rabbitmq
+
+  testrunner:
+    image: jolydronetestrunner
+    container_name: jolydronetestrunnerhost
+    environment:
+      - CUSTOMER_CARE_HOST=customercarehost
+      - CUSTOMER_CARE_PORT=8081
+      - DELIVERY_PLANNER_HOST=deliveryplannerhost
+      - DELIVERY_PLANNER_PORT=8082
+      - FLIGHT_MONITOR_HOST=flightmonitorhost
+      - FLIGHT_MONITOR_PORT=8083
+      - STATION_MANAGER_HOST=stationmanagerhost
+      - STATION_MANAGER_PORT=8084
+      - BANK_HOST=jolydronebankhost
+      - BANK_PORT=5000
+    depends_on:
+      - flightmonitor
+      - bank
+      - stationmanager
+      - deliveryplanner
+      - customercare
+      - postgresqldb

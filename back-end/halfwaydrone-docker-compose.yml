@@ -1,0 +1,25 @@
+version: "3.5"
+
+services:
+  halfwaydrone:
+    image: teamj-jolydrone-drone
+    container_name: halfwaydrone
+    stdin_open: true
+    tty: true
+    networks:
+      - team-j-created-network
+    environment:
+      - DRONE_NAME=JolyDroneHalfWay
+      - UNLOADED_WEIGHT=25
+      - AUTONOMY_MAXIMUM=74
+      - BATTERY_LEVEL_IN_PERCENT=100
+      - STATUS=AVAILABLE
+      - MAXIMUM_WEIGHING_CAPACITY=125
+      - RABBIT_HOST=jolydronerabbitmq
+      - PORT=5672
+      - RABBIT_PORT=5672
+
+
+networks:
+  team-j-created-network:
+    external: true

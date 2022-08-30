@@ -1,0 +1,5 @@
+.vscode
+.clj-kondo
+.idea
+.project
+target

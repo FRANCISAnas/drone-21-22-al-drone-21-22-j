@@ -1,0 +1,52 @@
+derenhalle:
+  pointA:
+    x: 0.0
+    y: 0.0
+  pointB:
+    x: 200.0
+    y: 200.0
+  updateRoute: "drone.regular.update"
+  specialRoute: "drone.special.events"
+
+
+tiscus:
+  pointA:
+    x: 200.0
+    y: 200.0
+  pointB:
+    x: 500.0
+    y: 500.0
+  updateRoute: "drone.regular.update"
+  specialRoute: "drone.special.events"
+
+
+sylent:
+  pointA:
+    x: 200.0
+    y: 0.0
+  pointB:
+    x: 500.0
+    y: 200.0
+  updateRoute: "drone.regular.update"
+  specialRoute: "drone.special.events"
+
+
+verson:
+  pointA:
+    x: 0.0
+    y: 200.0
+  pointB:
+    x: 200.0
+    y: 500.0
+  updateRoute: "drone.regular.update"
+  specialRoute: "drone.special.events"
+
+quendaylon:
+  pointA:
+    x: 0.0
+    y: -200.0
+  pointB:
+    x: 500.0
+    y: 0.0
+  updateRoute: "drone.regular.update"
+  specialRoute: "drone.special.events"

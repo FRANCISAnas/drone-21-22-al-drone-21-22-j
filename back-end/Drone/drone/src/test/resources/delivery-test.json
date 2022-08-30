@@ -1,0 +1,313 @@
+{
+  "id": 1,
+  "flightPlan": {
+    "id": 3,
+    "origin": {
+      "x": 448.0,
+      "y": -68.0
+    },
+    "destination": {
+      "x": 10.0,
+      "y": 350.0
+    },
+    "refillStops": [
+      {
+        "id": 4,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station11",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 411.0,
+            "y": 29.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 5,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station13",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 331.0,
+            "y": 33.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 6,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station14",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 242.0,
+            "y": 50.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 7,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station15",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 139.0,
+            "y": 59.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 8,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station4",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 153.3,
+            "y": 158.1
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 9,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station7",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 131.0,
+            "y": 246.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      },
+      {
+        "id": 10,
+        "chargingStation": {
+          "terminalCount": 5,
+          "stationName": "station8",
+          "terminals": [
+            {
+              "id": null,
+              "idForStation": 0,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 1,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 2,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": null,
+              "idForStation": 4,
+              "status": "AVAILABLE"
+            }
+          ],
+          "location": {
+            "x": 29.6,
+            "y": 268.0
+          },
+          "available": true
+        },
+        "stopoverStatus": "PENDING"
+      }
+    ],
+    "flightDistance": 756.7986781540567
+  },
+  "deliveryStatus": "IN_WAREHOUSE",
+  "trackingNumber": "JRE-28482",
+  "drone": {
+    "id": 2,
+    "unloadedWeight": 400,
+    "autonomyMaximum": 104,
+    "batteryLevelInPercent": 100,
+    "status": "AVAILABLE",
+    "name": "JolyDroneFarWay",
+    "maxWeighingCapacity": 1000,
+    "position": {
+      "x": 448.0,
+      "y": -68.0
+    }
+  },
+  "paquet": null
+}

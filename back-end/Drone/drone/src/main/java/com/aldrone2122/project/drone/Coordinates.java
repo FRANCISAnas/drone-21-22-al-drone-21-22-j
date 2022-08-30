@@ -1,0 +1,65 @@
+package com.aldrone2122.project.drone;
+
+
+import java.util.Objects;
+
+public class Coordinates {
+    private Double x;
+    private Double y;
+
+    public Coordinates() {
+    }
+
+    public Coordinates(Double x, Double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Coordinates move(Vector displacement) {
+        return new Coordinates(x + displacement.getA(), y + displacement.getB());
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public void setX(Double x) {
+        this.x = x;
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public void setY(Double y) {
+        this.y = y;
+    }
+
+    public boolean match(Coordinates other) {
+        return this.distanceToPoint(other) <= 1;
+    }
+
+    public Double distanceToPoint(Coordinates coordinates) {
+        return Math.sqrt(Math.pow(coordinates.x - x, 2) + Math.pow(coordinates.y - y, 2));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Coordinates that)) return false;
+        return getX().equals(that.getX()) && getY().equals(that.getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+            "x=" + x +
+            ", y=" + y +
+            '}';
+    }
+}

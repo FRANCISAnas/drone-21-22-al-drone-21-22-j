@@ -1,0 +1,12 @@
+FROM openjdk:17-bullseye
+
+WORKDIR /home
+RUN apt-get update
+RUN apt-get install wait-for-it
+# copy only the artifacts we need from the first stage and discard the rest
+COPY ./target/drone-jar-with-dependencies.jar ./drone.jar
+
+COPY start.sh start.sh
+RUN chmod +x start.sh
+# set the startup command to execute the jar
+ENTRYPOINT ["./start.sh"]

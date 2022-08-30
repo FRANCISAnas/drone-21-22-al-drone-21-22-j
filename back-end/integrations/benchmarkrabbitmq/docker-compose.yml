@@ -1,0 +1,303 @@
+version: "3.5"
+
+services:
+  postgresqldb:
+    image: jolydronepostgresdb
+    container_name: teamj-jolydrone-postgresqldb
+    hostname: postgresqldb
+    restart: unless-stopped
+    networks:
+      - team-j-created-network
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_PASSWORD=a_super_pa77ssword896
+      - POSTGRES_USER=yankee_esqucctaDF
+
+  redisdb:
+    image: redis:6.2-alpine
+    container_name: teamj-jolydrone-redisdb
+    hostname: redisdb
+    restart: unless-stopped
+    networks:
+      - team-j-created-network
+    expose:
+      - "6379"
+    command: >
+      --requirepass password
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: teamj-jolydrone-rabbitmq
+    hostname: jolydronerabbitmq
+    networks:
+      - team-j-created-network
+    expose:
+      - "5672"
+
+
+  deliveryplanner:
+    image: teamj-mocks-jolydrone-deliveryplanner
+    container_name: teamj-jolydrone-deliveryplanner
+    hostname: deliveryplannerhost
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydronedeliveryplannerdb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - CHARGING_STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - SERVER_PORT=8082
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - FLIGHT_MONITOR_GATEWAY=http://gatewayhost:9090
+
+  gateway:
+    image: teamj-jolydrone-gateway
+    container_name: teamj-jolydrone-gatewayhost
+    hostname: gatewayhost
+    networks:
+      - team-j-created-network
+    expose:
+      - "9090"
+    environment:
+      - FLIGHT_MONITOR_URL_DER=http://flightmonitorhostder:8083
+      - FLIGHT_MONITOR_URL_TIS=http://flightmonitorhosttis:8083
+      - FLIGHT_MONITOR_URL_SYL=http://flightmonitorhostsyl:8083
+      - FLIGHT_MONITOR_URL_VERSON=http://flightmonitorhostverson:8083
+      - FLIGHT_MONITOR_URL_QUEN=http://flightmonitorhostquen:8083
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - PORT=9090
+
+  flightmonitorder:
+    image: teamj-jolydrone-flightmonitor
+    container_name: teamj-jolydrone-flightmonitorhostder
+    hostname: flightmonitorhostder
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8083:8083"
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8083
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - MAINTENANCE_URL=http://maintenance:8085
+      - REGULAR_UPDATE_ROUTE=drone.regular.update.derenhalle
+      - SPECIAL_UPDATE_ROUTE=drone.special.events.derenhalle
+      - SPRING_REDIS_DATABASE=0
+      - SPRING_REDIS_HOST=redisdb
+
+  flightmonitortis:
+    image: teamj-jolydrone-flightmonitor
+    container_name: teamj-jolydrone-flightmonitorhosttis
+    hostname: flightmonitorhosttis
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8086:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8086
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - MAINTENANCE_URL=http://maintenance:8085
+      - REGULAR_UPDATE_ROUTE=drone.regular.update.tiscus
+      - SPECIAL_UPDATE_ROUTE=drone.special.events.tiscus
+      - SPRING_REDIS_DATABASE=1
+      - SPRING_REDIS_HOST=redisdb
+
+  flightmonitorsyl:
+    image: teamj-jolydrone-flightmonitor
+    container_name: teamj-jolydrone-flightmonitorhostsyl
+    hostname: flightmonitorhostsyl
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8087:8083"
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8087
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - MAINTENANCE_URL=http://maintenance:8085
+      - REGULAR_UPDATE_ROUTE=drone.regular.update.sylent
+      - SPECIAL_UPDATE_ROUTE=drone.special.events.sylent
+      - SPRING_REDIS_DATABASE=2
+      - SPRING_REDIS_HOST=redisdb
+
+  flightmonitorverson:
+    image: teamj-jolydrone-flightmonitor
+    container_name: teamj-jolydrone-flightmonitorhostverson
+    hostname: flightmonitorhostverson
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8088:8083"
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8088
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - MAINTENANCE_URL=http://maintenance:8085
+      - REGULAR_UPDATE_ROUTE=drone.regular.update.verson
+      - SPECIAL_UPDATE_ROUTE=drone.special.events.verson
+      - SPRING_REDIS_DATABASE=3
+      - SPRING_REDIS_HOST=redisdb
+
+  flightmonitorquen:
+    image: teamj-jolydrone-flightmonitor
+    container_name: teamj-jolydrone-flightmonitorhostquen
+    hostname: flightmonitorhostquen
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8089:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydroneflightmonitordb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - STATION_MANAGER_URL=http://stationmanagerhost:8084
+      - PORT=8089
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+      - SPRING_RABBITMQ_HOST=jolydronerabbitmq
+      - RABBIT_HOST=jolydronerabbitmq
+      - DELIVERY_PLANNER_URL=http://deliveryplannerhost:8082
+      - MAINTENANCE_URL=http://maintenance:8085
+      - REGULAR_UPDATE_ROUTE=drone.regular.update.quendaylon
+      - SPECIAL_UPDATE_ROUTE=drone.special.events.quendaylon
+      - SPRING_REDIS_DATABASE=4
+      - SPRING_REDIS_HOST=redisdb
+
+  stationmanager:
+    image: teamj-jolydrone-stationmanager
+    container_name: teamj-jolydrone-stationmanagerhost
+    hostname: stationmanagerhost
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    depends_on:
+      - postgresqldb
+      - bank
+    ports:
+      - "8084:8084"
+    expose:
+      - "8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqldb:5432/jolydronestationmanagerdb
+      - SPRING_DATASOURCE_USERNAME=patrick
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF
+      - SPRING_DATASOURCE_PASSWORD=mr_roboto446
+      - PORT=8084
+      - SHOW_SQL=false
+      - POSTGRES_HOST=postgresqldb
+      - POSTGRES_PORT=5432
+
+  bank:
+    image: teamj-jolydrone-bank
+    container_name: teamj-jolydrone-bankhost
+    hostname: jolydronebankhost
+    networks:
+      - team-j-created-network
+    expose:
+      - "5000"
+    environment:
+      - PORT=5000
+  
+  maintenance:
+    image: teamj-jolydrone-maintenance
+    container_name: teamj-jolydrone-maintenance
+    hostname: maintenance
+    logging:
+      driver: "none"
+    networks:
+      - team-j-created-network
+    expose:
+      - "8085"
+    environment:
+      - PORT=8085
+
+  benchmark:
+    image: teamj-jolydrone-benchmark-rabbitmq
+    container_name: teamj-jolydrone-benchmark-rabbitmq
+    hostname: benchmark
+    networks:
+      - team-j-created-network
+    environment:
+      - RABBIT_PORT=5672
+      - RABBIT_HOST=jolydronerabbitmq
+
+networks:
+  team-j-created-network:
+    external: true
